@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 Egg Game - Jogo Interativo de Ovos Encantados</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Egg Selection Scene -->
+        <div id="eggSelectionScene" class="scene active">
+            <div class="barn-container">
+                <div class="barn-background">
+                    <h1>🏠 Celeiro Encantado</h1>
+                    <p class="egg-count">Ovos Disponíveis: <strong id="eggLimit">2</strong></p>
+                </div>
+                <div class="eggs-grid" id="eggsGrid"></div>
+            </div>
+        </div>
+
+        <!-- Egg Interaction Scene -->
+        <div id="eggInteractionScene" class="scene">
+            <button class="barn-button" onclick="window.game.goToEggSelection()">🏠 Celeiro</button>
+            <div class="interaction-area">
+                <div class="canvas-container">
+                    <canvas id="gameCanvas"></canvas>
+                </div>
+                <div class="interaction-info">
+                    <h2 id="eggTitle">Ovo Encantado</h2>
+                    <div class="click-counter">
+                        <p>Cliques: <strong id="clickCount">0</strong>/10</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <p class="instruction">✨ Clique no ovo para fazer eclodir!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pet Scene -->
+        <div id="petScene" class="scene">
+            <button class="barn-button" onclick="window.game.goToEggSelection()">🏠 Celeiro</button>
+            <div class="pet-area">
+                <div class="canvas-container">
+                    <canvas id="petCanvas"></canvas>
+                </div>
+                <div class="pet-info">
+                    <h2 id="petName">🐾 Seu Pet</h2>
+                    <p id="petDescription"></p>
+                    <div class="pet-stats">
+                        <div class="stat">
+                            <span class="stat-label">😊 Felicidade:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="happinessFill"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">⚡ Energia:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="energyFill"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">🍽️ Fome:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="hungerFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

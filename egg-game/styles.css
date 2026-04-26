@@ -1,0 +1,356 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#gameContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.scene {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.scene.active {
+    display: flex;
+}
+
+/* Egg Selection Scene */
+#eggSelectionScene {
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.barn-container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.barn-background {
+    background: rgba(139, 90, 43, 0.9);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.barn-background h1 {
+    color: #FFD700;
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.egg-count {
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.eggs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+.egg-selector {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.egg-selector:hover {
+    transform: scale(1.1);
+}
+
+.egg-selector.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.egg-selector p {
+    color: #fff;
+    font-size: 1.2em;
+    margin-top: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+/* Egg Styles */
+.egg {
+    width: 120px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50% 50% 50% 40%;
+    position: relative;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: eggFloat 3s ease-in-out infinite;
+}
+
+@keyframes eggFloat {
+    0%, 100% {
+        transform: rotate(-45deg) translateY(0);
+    }
+    50% {
+        transform: rotate(-45deg) translateY(-20px);
+    }
+}
+
+.egg-shine {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    top: 20px;
+    left: 20px;
+}
+
+/* Element-specific egg colors */
+.water-egg {
+    background: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%);
+}
+
+.air-egg {
+    background: linear-gradient(135deg, #87ceeb 0%, #e0ffff 100%);
+}
+
+.earth-egg {
+    background: linear-gradient(135deg, #8b7355 0%, #d2b48c 100%);
+}
+
+.fire-egg {
+    background: linear-gradient(135deg, #ff4500 0%, #ffa500 100%);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.6);
+}
+
+.metal-egg {
+    background: linear-gradient(135deg, #c0c0c0 0%, #808080 100%);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Interaction Scene */
+#eggInteractionScene {
+    background: radial-gradient(circle, #87CEEB 0%, #4a90e2 100%);
+    flex-direction: column;
+}
+
+.interaction-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+}
+
+.barn-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background: #FFD700;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.barn-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.interaction-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 30px;
+    padding: 20px;
+}
+
+.canvas-container {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    aspect-ratio: 1;
+}
+
+#gameCanvas, #petCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+.interaction-info {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+}
+
+.interaction-info h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.click-counter {
+    margin: 20px 0;
+}
+
+.click-counter p {
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 25px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 15px;
+}
+
+.instruction {
+    color: #999;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+/* Pet Scene */
+#petScene {
+    background: radial-gradient(circle, #87CEEB 0%, #4a90e2 100%);
+    flex-direction: column;
+}
+
+.pet-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+}
+
+.pet-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 30px;
+    padding: 20px;
+}
+
+.pet-info {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+}
+
+.pet-info h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+#petDescription {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.pet-stats {
+    margin-top: 20px;
+}
+
+.stat {
+    margin-bottom: 15px;
+}
+
+.stat-label {
+    display: inline-block;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 5px;
+    min-width: 120px;
+}
+
+.stat-bar {
+    width: 100%;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .eggs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .interaction-area,
+    .pet-area {
+        flex-direction: column;
+    }
+
+    .interaction-info,
+    .pet-info {
+        min-width: 100%;
+    }
+
+    .barn-background h1 {
+        font-size: 2em;
+    }
+}

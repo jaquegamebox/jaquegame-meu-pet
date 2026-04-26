@@ -3,127 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Pet Imaginário - Berçário</title>
+    <title>Cyber-Pet: Origens Elementais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --neon-pink: #ff00ff;
-            --bg-day: linear-gradient(180deg, #2193b0, #6dd5ed);
-            --bg-night: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+            --ar: #e0f7fa; --agua: #0288d1; --fogo: #f44336; --terra: #8bc34a; --metal: #b0bec5;
+        }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* Cenario Principal */
+        #main-stage {
+            width: 100vw; height: 100vh;
+            background: url('cenario.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            transition: background 2s;
-            overflow: hidden;
+        /* Zonas de Clique (Invisíveis sobre as prateleiras) */
+        .click-zone {
+            position: absolute; cursor: pointer;
+            border: 3px border: transparent; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 12px; text-shadow: 2px 2px 5px black;
+        }
+        .click-zone:hover { border: 3px dashed white; background: rgba(255,255,255,0.2); }
+
+        /* Posicionamento das Prateleiras (Ajustável) */
+        #zone-ar { top: 25%; left: 5%; width: 15%; height: 40%; }
+        #zone-agua { top: 25%; left: 22%; width: 15%; height: 40%; }
+        #zone-metal { top: 20%; left: 42%; width: 15%; height: 35%; }
+        #zone-fogo { top: 25%; left: 62%; width: 15%; height: 40%; }
+        #zone-terra { top: 25%; left: 80%; width: 15%; height: 40%; }
+
+        /* Cenário de Incubação (O Segundo Cenário) */
+        #incubation-stage {
+            display: none; width: 100vw; height: 100vh;
+            flex-direction: column; align-items: center; justify-content: center;
+            transition: 1s;
         }
 
-        /* Ciclo Dia/Noite Visual */
-        .day { background: var(--bg-day); }
-        .night { background: var(--bg-night); }
+        .bg-ar { background: linear-gradient(180deg, #81d4fa, #e1f5fe); } /* Celeiro de nuvens */
+        .bg-agua { background: linear-gradient(180deg, #01579b, #0288d1); }
+        .bg-fogo { background: linear-gradient(180deg, #bf360c, #ff5722); }
+        .bg-terra { background: linear-gradient(180deg, #33691e, #689f38); }
+        .bg-metal { background: linear-gradient(180deg, #263238, #546e7a); }
 
-        #game-container {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
+        #egg-display {
+            width: 200px; height: 260px;
+            background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            cursor: pointer; transition: 0.1s;
         }
 
-        #egg {
-            font-size: 100px;
-            cursor: pointer;
-            transition: transform 0.1s;
-            user-select: none;
-            display: inline-block;
-        }
-
-        #egg:active {
-            transform: scale(0.9) rotate(5deg);
-        }
-
-        .shake {
-            animation: shake 0.5s infinite;
-        }
-
+        .shake { animation: shake 0.3s infinite; }
         @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-3px, 0px) rotate(-1deg); }
-            40% { transform: translate(3px, 2px) rotate(1deg); }
-            100% { transform: translate(1px, -2px) rotate(0deg); }
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
         }
 
-        .status-bar {
-            margin-top: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        #pet-reveal {
+            display: none; font-size: 100px; 
+            animation: bounce 1s infinite alternate;
         }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-20px); } }
+
     </style>
 </head>
-<body id="body">
+<body>
 
-    <div id="game-container">
-        <h1 id="title">Toque no Ovo para Chocar</h1>
-        <div id="egg">🥚</div>
-        <div class="status-bar">
-            Cliques restantes: <span id="clicks-needed">20</span>
-        </div>
-        <p id="time-status"></p>
+    <div id="main-stage">
+        <div id="zone-ar" class="click-zone" onclick="startIncubation('ar')">AR</div>
+        <div id="zone-agua" class="click-zone" onclick="startIncubation('agua')">ÁGUA</div>
+        <div id="zone-metal" class="click-zone" onclick="startIncubation('metal')">METAL</div>
+        <div id="zone-fogo" class="click-zone" onclick="startIncubation('fogo')">FOGO</div>
+        <div id="zone-terra" class="click-zone" onclick="startIncubation('terra')">TERRA</div>
+    </div>
+
+    <div id="incubation-stage">
+        <h1 id="status-text" style="color: white; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Clique para chocar!</h1>
+        <div id="egg-display"></div>
+        <div id="pet-reveal">🐾</div> <button onclick="location.reload()" style="margin-top:20px; padding:10px; cursor:pointer;">Voltar ao Início</button>
     </div>
 
     <script>
-        let clicks = 20;
-        const eggElement = document.getElementById('egg');
-        const clickDisplay = document.getElementById('clicks-needed');
-        const body = document.getElementById('body');
+        let clicks = 15;
+        let selectedElement = "";
 
-        // Lógica de Ciclo de 24h (Simples)
-        function updateCycle() {
-            const hour = new Date().getHours();
-            const status = document.getElementById('time-status');
+        function startIncubation(element) {
+            selectedElement = element;
+            document.getElementById('main-stage').style.display = 'none';
+            const stage = document.getElementById('incubation-stage');
+            stage.style.display = 'flex';
+            stage.className = 'bg-' + element;
             
-            if (hour >= 6 && hour < 18) {
-                body.className = 'day';
-                status.innerText = "☀️ Está de dia no mundo imaginário";
-            } else {
-                body.className = 'night';
-                status.innerText = "🌙 O mundo imaginário está sob o luar";
-            }
+            // Personaliza o ovo conforme o elemento
+            const egg = document.getElementById('egg-display');
+            if(element === 'ar') egg.style.background = 'radial-gradient(circle at 30% 30%, #fff, #b3e5fc)';
+            if(element === 'fogo') egg.style.background = 'radial-gradient(circle at 30% 30%, #ffeb3b, #f44336)';
+            // ... adicionar outros filtros de cores depois
         }
 
-        // Lógica do Clique
-        eggElement.addEventListener('click', () => {
+        document.getElementById('egg-display').addEventListener('click', function() {
             if (clicks > 0) {
                 clicks--;
-                clickDisplay.innerText = clicks;
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => this.style.transform = 'scale(1)', 100);
                 
-                // Tremer o ovo conforme chega perto de quebrar
-                if (clicks < 10) eggElement.classList.add('shake');
-                
+                if (clicks <= 5) this.classList.add('shake');
+
                 if (clicks === 0) {
-                    revealPet();
+                    this.style.display = 'none';
+                    document.getElementById('status-text').innerText = "Nasceu um novo amigo!";
+                    const reveal = document.getElementById('pet-reveal');
+                    reveal.style.display = 'block';
+                    // Lógica para mostrar o animal específico baseado no 'selectedElement'
                 }
             }
         });
-
-        function revealPet() {
-            eggElement.classList.remove('shake');
-            eggElement.innerText = '🐣';
-            document.getElementById('title').innerText = "Ele Nasceu!";
-            alert("Parabéns! Seu primeiro pet imaginário nasceu!");
-            // Aqui salvaremos no futuro o progresso
-        }
-
-        updateCycle();
     </script>
 </body>
 </html>

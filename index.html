@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Pet Imaginário - Berçário</title>
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --bg-day: linear-gradient(180deg, #2193b0, #6dd5ed);
+            --bg-night: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            transition: background 2s;
+            overflow: hidden;
+        }
+
+        /* Ciclo Dia/Noite Visual */
+        .day { background: var(--bg-day); }
+        .night { background: var(--bg-night); }
+
+        #game-container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        #egg {
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            user-select: none;
+            display: inline-block;
+        }
+
+        #egg:active {
+            transform: scale(0.9) rotate(5deg);
+        }
+
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-3px, 0px) rotate(-1deg); }
+            40% { transform: translate(3px, 2px) rotate(1deg); }
+            100% { transform: translate(1px, -2px) rotate(0deg); }
+        }
+
+        .status-bar {
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body id="body">
+
+    <div id="game-container">
+        <h1 id="title">Toque no Ovo para Chocar</h1>
+        <div id="egg">🥚</div>
+        <div class="status-bar">
+            Cliques restantes: <span id="clicks-needed">20</span>
+        </div>
+        <p id="time-status"></p>
+    </div>
+
+    <script>
+        let clicks = 20;
+        const eggElement = document.getElementById('egg');
+        const clickDisplay = document.getElementById('clicks-needed');
+        const body = document.getElementById('body');
+
+        // Lógica de Ciclo de 24h (Simples)
+        function updateCycle() {
+            const hour = new Date().getHours();
+            const status = document.getElementById('time-status');
+            
+            if (hour >= 6 && hour < 18) {
+                body.className = 'day';
+                status.innerText = "☀️ Está de dia no mundo imaginário";
+            } else {
+                body.className = 'night';
+                status.innerText = "🌙 O mundo imaginário está sob o luar";
+            }
+        }
+
+        // Lógica do Clique
+        eggElement.addEventListener('click', () => {
+            if (clicks > 0) {
+                clicks--;
+                clickDisplay.innerText = clicks;
+                
+                // Tremer o ovo conforme chega perto de quebrar
+                if (clicks < 10) eggElement.classList.add('shake');
+                
+                if (clicks === 0) {
+                    revealPet();
+                }
+            }
+        });
+
+        function revealPet() {
+            eggElement.classList.remove('shake');
+            eggElement.innerText = '🐣';
+            document.getElementById('title').innerText = "Ele Nasceu!";
+            alert("Parabéns! Seu primeiro pet imaginário nasceu!");
+            // Aqui salvaremos no futuro o progresso
+        }
+
+        updateCycle();
+    </script>
+</body>
+</html>
